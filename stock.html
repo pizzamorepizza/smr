@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SM Roulette</title>
+  <link rel="stylesheet" href="jquery-ui.css">
+  <link rel="stylesheet" href="style.css">
+  <style>
+  .toggler { width: 500px; height: 100px; }
+  #button { padding: .5em 1em; text-decoration: none; }
+  #effect { width: 240px; height: 80px; padding: 0.4em; position: relative; }
+  #effect h3 { margin: 0; padding: 0.4em; text-align: center; }
+  </style>
+  <script src="jquery.js"></script>
+  <script src="jquery-ui.js"></script>
+  <script src="companies.js"></script>
+  <script>
+  $( function() {
+    // run the currently selected effect
+    function runEffect() {
+
+      var filteredList = companies;
+      
+      
+      var universe = $( "#universe" ).val();
+      if(universe != "all") {
+        filteredList = companies.filter(company => company.Universe === universe)
+      }
+
+      console.log(filteredList.length)
+      
+ 
+      $( "#effect" ).show("blind");
+
+      var value = Math.floor(Math.random() * filteredList.length)
+
+      $( "#ticker" ).text(filteredList[value].Ticker);
+      $( "#name" ).text(filteredList[value].Name);
+    };
+ 
+    // Set effect from select menu value
+    $( "#button" ).on( "click", function() {
+      runEffect();
+    });
+ 
+    $( "#effect" ).hide();
+  } );
+  </script>
+</head>
+<body>
+ 
+
+
+<select name="universe" id="universe">
+  <option value="all">All</option>
+  <option value="US">US</option>
+  <option value="International">INTL</option>
+</select>
+
+<button id="button" class="ui-state-default ui-corner-all">Run</button>
+
+<div class="toggler">
+  <div id="effect" class="ui-widget-content ui-corner-all">
+    <h3 id="ticker" class="ui-widget-header ui-corner-all"></h3>
+    <p id="name">
+    </p>
+  </div>
+</div>
+ 
+
+ 
+ 
+</body>
+</html>
